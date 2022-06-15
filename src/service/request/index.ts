@@ -11,22 +11,25 @@ class jxRequest {
   showLoading: boolean
   loading?: any
   constructor(config: JXRequestConfig) {
+    // 创建axios实例
     this.instance = axios.create(config)
+
+    // 保存基本信息
     this.showLoading = config.showLoading ?? DEFAULT_LOADING
     this.interceptors = config.interceptors
+
     // 对应实例传入的可配置的拦截器
-    // 请求拦截
+    // 1.从config中取出的拦截器是对应的实例的拦截器
     this.instance.interceptors.request.use(
       this.interceptors?.requestInterceptor,
       this.interceptors?.requestInterceptorCatch
     )
-    // 响应拦截
     this.instance.interceptors.response.use(
       this.interceptors?.responseInterceptor,
       this.interceptors?.responseInterceptorCatch
     )
 
-    // 所有实例都有的拦截器
+    // 2.添加所有的实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
         // const token = useUserStore().getToken
@@ -60,11 +63,15 @@ class jxRequest {
       },
       (err) => {
         this.loading?.close()
+        // 判断不同的HttpErrorCode显示不同的错误信息
+        if (err.response.status === 404) {
+          console.log('404的错误~')
+        }
         return err
       }
     )
   }
-  request<T>(config: JXRequestConfig<T>): Promise<T> {
+  request<T = any>(config: JXRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 1. 单个请求对config的处理
       if (config.interceptors?.requestInterceptor) {
@@ -93,6 +100,7 @@ class jxRequest {
           // 将showloading还原，这样不会影响下一个请求
           this.showLoading = DEFAULT_LOADING
           reject(err)
+          return err
         })
     })
   }
@@ -107,6 +115,10 @@ class jxRequest {
 
   delete<T>(config: JXRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PUT' })
+  }
+
+  patch<T = any>(config: JXRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
 
