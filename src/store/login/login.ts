@@ -21,14 +21,15 @@ const loginModule: Module<ILoginState, IRootState> = {
     async accountLoginAction({ commit }, payload: IAccount) {
       // 1. 实现登录逻辑
       // try {
+      console.log(commit)
       const loginResult = await accountLoginRequest(payload)
-      //   console.log(loginResult)
+      console.log(loginResult)
       // } catch (error) {
       //   console.log(error)
       // }
     },
     phoneLoginAction({ commit }, payload: any) {
-      console.log(payload)
+      console.log(commit, payload)
     }
   }
 }
