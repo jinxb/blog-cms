@@ -17,7 +17,14 @@ import {
   ElTabPane,
   ElIcon,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElContainer,
+  ElHeader,
+  ElMain,
+  ElMenu,
+  ElSubMenu,
+  ElMenuItemGroup,
+  ElMenuItem
 } from 'element-plus/lib/components'
 // 图标
 import { Avatar, Iphone } from '@element-plus/icons-vue'
@@ -38,6 +45,13 @@ const components = [
   ElIcon,
   ElCheckbox,
   ElLink,
+  ElContainer,
+  ElHeader,
+  ElMain,
+  ElMenu,
+  ElSubMenu,
+  ElMenuItemGroup,
+  ElMenuItem,
   Avatar,
   Iphone
 ]

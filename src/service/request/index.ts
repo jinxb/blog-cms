@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import type { JXRequestInterceptors, JXRequestConfig } from './type'
+
 // import { LoadingOptionsResolved } from 'element-plus/lib/components/loading/src/types'
 import { ElLoading } from 'element-plus/lib/components'
 
@@ -32,9 +33,10 @@ class jxRequest {
     // 2.添加所有的实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        // const token = useUserStore().getToken
+        // const token = localCache.getCache('token')
         // if (token) {
         //   config.headers.Authorization = `Bearer ${token}`
+
         // }
         if (this.showLoading) {
           this.loading = ElLoading.service({
@@ -71,7 +73,7 @@ class jxRequest {
       }
     )
   }
-  request<T = any>(config: JXRequestConfig<T>): Promise<T> {
+  request<T>(config: JXRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 1. 单个请求对config的处理
       if (config.interceptors?.requestInterceptor) {

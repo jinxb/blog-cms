@@ -22,4 +22,9 @@ const store = createStore<IRootState>({
   }
 })
 
+// vuex中用户数据初始化
+export function setupStore() {
+  store.dispatch('login/loadLocalLogin')
+}
+
 export default store

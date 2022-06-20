@@ -43,12 +43,13 @@ export default defineComponent({
   setup() {
     // 1. 定义属性
     const isKeepPassword = ref(false)
-    const accountRef = ref<InstanceType<typeof LoginAccount>>()
+    const accountRef = ref<InstanceType<typeof LoginAccount>>() // 获取子组件实例类型
     const phoneRef = ref<InstanceType<typeof LoginPhone>>()
     const currentTab = ref('account')
 
     // 2. 定义方法
     const handleLoginClick = () => {
+      // 区分对应逻辑
       if (currentTab.value === 'account') {
         accountRef.value?.LoginAction(isKeepPassword.value)
       } else {
